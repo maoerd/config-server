@@ -1,0 +1,25 @@
+# Maoerd Cloud Config Server
+# Support features:
+# 1. Clone repo on server startup to avoid invalid repo uri issue
+# 2. Force pull repo's change to void local clone dirty issue
+# 3. Search configurations by application name in per repo to support multi appliations
+# 4. Monitor remote repo's change
+# 5. Publish remote repo's change event to client
+
+server:
+  context-path: /config-server
+  port: 8888
+  
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/maoerd/configuration
+          cloneOnStart: true
+          force-pull: true
+          searchPaths: '{application}'
+  
+
