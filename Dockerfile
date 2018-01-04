@@ -2,7 +2,10 @@ FROM openjdk:8u151-jre-slim
 MAINTAINER Wenbo Wang <jackie-1685@163.com>
 
 ARG JAR_FILE
-ENV GIT_URI=https://github.com/maoerd/configuration
+ENV SERVER_PORT=8888
+ENV SPRING_CLOUD_CONFIG_SERVER_GIT_URI=https://github.com/maoerd/configuration
+ENV EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://localhost:8761/eureka/
+
 
 ADD ${JAR_FILE} config-server.jar
 
@@ -16,4 +19,7 @@ EXPOSE 8888
 # The dev/urandom is not
 # . in file path is used to avoid tomcat origin bug
 
-ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "config-server.jar", "--spring.cloud.config.server.git.uri=${GIT_URI}"]
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "config-server.jar", \
+	"--server.port=${SERVER_PORT}", \
+	" --spring.cloud.config.server.git.uri=${SPRING_CLOUD_CONFIG_SERVER_GIT_URI}", \
+	" --eureka.client.serviceUrl.defaultZone=${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE}"]

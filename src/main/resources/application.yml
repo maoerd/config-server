@@ -5,6 +5,15 @@
 # 3. Search configurations by application name in per repo to support multi appliations
 # 4. Monitor remote repo's change
 # 5. Publish remote repo's change event to client
+#
+# 6. Register itself into eureka server as a service
+# 7. Don't discovery other services
+#
+# Please be aware of that we don't have region && zone configurations for the config server.
+# Because of the discovery client is disabled due to no need to discover other services
+# 
+# Config server only register itself into different eureka server which locales in different zones
+# 
 
 server:
   context-path: /config-server
@@ -21,5 +30,11 @@ spring:
           cloneOnStart: true
           force-pull: true
           searchPaths: '{application}'
+
+eureka:
+  client:
+    enabled: false
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
   
 

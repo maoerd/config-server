@@ -1,0 +1,24 @@
+version: "3"
+services:
+  primary-config-server:
+    image: mengluo668/config-server:0.0.1-SNAPSHOT
+    restart: always
+    environment:
+      - SERVER_PORT=8888
+      - SPRING_CLOUD_CONFIG_SERVER_GIT_URI=http://35.185.88.52:8761/eureka/
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=https://github.com/maoerd/configuration
+    ports:
+      - 8888:8888
+    volumes:
+      - "/tmp:/tmp"
+  backup-config-server:
+    image: mengluo668/config-server:0.0.1-SNAPSHOT
+    restart: always
+    environment:
+      - SERVER_PORT=8889
+      - SPRING_CLOUD_CONFIG_SERVER_GIT_URI=http://35.185.88.52:8762/eureka/
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=https://github.com/maoerd/configuration
+    ports:
+      - 8889:8889
+    volumes:
+      - "/tmp:/tmp"
