@@ -30,9 +30,12 @@ ENV DEFAULT_CONFIG_SERVER_PORT=8888
 # `docker run -e DEFAULT_CONFIG_SERVER_PORT=8080 -p 8080:8080 ...`
 EXPOSE ${DEFAULT_CONFIG_SERVER_PORT}
 
+# We have to explicit claim the workdir so that the spring boot application can read configuration files from /config-server/config 
+WORKDIR /config-server
+
 # -Djava.security.egd=file:/dev/./urandom
 # Tomcat generate session id according to OS dev/random or dev/urandome
 # The dev/random can cause delays during startup if entropy source that is used to initialize SecureRandom is short of entropy
 # The dev/urandom is not
 # . in file path is used to avoid tomcat origin bug
-ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/config-server/config-server.jar"]
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "config-server.jar"]
