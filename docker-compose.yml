@@ -1,24 +1,29 @@
+# Dockerized Config Server Compose
+# 
+# If you want to up the compose without change anything, then you have to clone the configurations at the first
+# Configuration Location is here: https://github.com/maoerd/configuration.git
+# Please make sure the configuration folder and config-server folder have the same parent folder
+# Because of in the compose, we use a relative path volume.
+# 
+# In windows, You may hit some problems with the relative folder. You have to add relative path support by following:
+# Right click on docker icon -> Settings -> Shared Drives
 version: "3"
 services:
   primary-config-server:
     image: mengluo668/config-server:0.0.1-SNAPSHOT
     restart: always
-    environment:
-      - SERVER_PORT=8888
-      - SPRING_CLOUD_CONFIG_SERVER_GIT_URI=http://35.185.88.52:8761/eureka/
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=https://github.com/maoerd/configuration
     ports:
       - 8888:8888
     volumes:
-      - "/tmp:/tmp"
+      - "/tmp/primary-config-server:/tmp"
+      - "../configuration/config-server/primary:/config-server/config"
   backup-config-server:
     image: mengluo668/config-server:0.0.1-SNAPSHOT
     restart: always
     environment:
-      - SERVER_PORT=8889
-      - SPRING_CLOUD_CONFIG_SERVER_GIT_URI=http://35.185.88.52:8762/eureka/
-      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=https://github.com/maoerd/configuration
+      - DEFAULT_CONFIG_SERVER_PORT=8889
     ports:
       - 8889:8889
     volumes:
-      - "/tmp:/tmp"
+      - "/tmp/backup-config-server:/tmp"
+      - "../configuration/config-server/backup:/config-server/config"
