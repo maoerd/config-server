@@ -13,7 +13,7 @@ function startupDockerCompose(){
 		echo "docker-compose is exist, starting up applications..."
 	else 
 		echo "docker-compose is not exist, download docker-compose image and starting up applications..."
-		docker run --rm -d -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD:/rootfs/$PWD" -w="/rootfs/$PWD" docker/compose:1.18.0 up
+		docker run --rm -d -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD:/rootfs/$PWD" -v "$(dirname $PWD)/configuration:/rootfs/$(dirname $PWD)/configuration" -w="/rootfs/$PWD" docker/compose:1.18.0 up
 	fi
 }
 
