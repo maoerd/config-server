@@ -1,12 +1,8 @@
 # Dockerized Config Server Compose
 # 
-# If you want to up the compose without change anything, then you have to clone the configurations at the first
-# Configuration Location is here: https://github.com/maoerd/configuration.git
-# Please make sure the configuration folder and config-server folder have the same parent folder
-# Because of in the compose, we use a relative path volume.
+# If you want to up the compose without change anything, then you have to clone the configurations repository,
+# and clone from: https://github.com/maoerd/configuration.git to local /var
 # 
-# In windows, You may hit some problems with the relative folder. You have to add relative path support by following:
-# Right click on docker icon -> Settings -> Shared Drives
 version: "3"
 services:
   primary-config-server:
@@ -16,7 +12,7 @@ services:
       - 8888:8888
     volumes:
       - "/tmp/primary-config-server:/tmp"
-      - "../configuration/config-server/primary/:/config-server/config"
+      - "/var/configuration/config-server/primary/:/config-server/config"
   backup-config-server:
     image: mengluo668/config-server:0.0.1-SNAPSHOT
     restart: always
@@ -26,4 +22,4 @@ services:
       - 8889:8889
     volumes:
       - "/tmp/backup-config-server:/tmp"
-      - "../configuration/config-server/backup/:/config-server/config"
+      - "/var/configuration/config-server/backup/:/config-server/config"
