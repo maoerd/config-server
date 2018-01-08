@@ -9,14 +9,14 @@
 # Right click on docker icon -> Settings -> Shared Drives
 version: "3"
 services:
-  primary-config-server:
-    image: mengluo668/config-server:0.0.1-SNAPSHOT
-    restart: always
-    ports:
-      - 8888:8888
-    volumes:
-      - "/tmp/primary-config-server:/tmp"
-      - "../configuration/config-server/primary:/config-server/config"
+  # primary-config-server:
+  #   image: mengluo668/config-server:0.0.1-SNAPSHOT
+  #   restart: always
+  #   ports:
+  #     - 8888:8888
+  #   volumes:
+  #     - "/tmp/primary-config-server:/tmp"
+  #     - "primary-config-server-config:/config-server/config"
   backup-config-server:
     image: mengluo668/config-server:0.0.1-SNAPSHOT
     restart: always
@@ -26,4 +26,4 @@ services:
       - 8889:8889
     volumes:
       - "/tmp/backup-config-server:/tmp"
-      - "../configuration/config-server/backup:/config-server/config"
+      - "/var/configuration/config-server/backup:/config-server/config"
