@@ -5,30 +5,11 @@
 FROM openjdk:8u151-jre-slim
 MAINTAINER Wenbo Wang <jackie-1685@163.com>
 
-# Copy the final build JAR file to /config-server/config-server.jar
+# Arg for java file name
 ARG JAR_FILE
 
+# Copy the final build JAR file to /config-server/config-server.jar
 ADD ${JAR_FILE} /config-server/config-server.jar
-
-# Volume you application configuration files into /config-server/config
-#
-# If you have modified the port(default 8888) in configuration files, e.g, server.port=8080
-# then you have to expose the modified port explicitly like below: 
-# `docker run -e DEFAULT_CONFIG_SERVER_PORT=8080 -p 8080:8080 ...`
-VOLUME /config-server/config
-
-# Volume tmp files
-VOLUME /tmp
-
-# Default exposed port
-ENV DEFAULT_CONFIG_SERVER_PORT=8888
-
-# Make the port(default 8888) available to the world outside this container
-# 
-# If you have modified the port(default 8888) in configuration files, e.g, server.port=8080
-# then you have to expose the modified port explicitly like below: 
-# `docker run -e DEFAULT_CONFIG_SERVER_PORT=8080 -p 8080:8080 ...`
-EXPOSE ${DEFAULT_CONFIG_SERVER_PORT}
 
 # We have to explicit claim the workdir so that the spring boot application can read configuration files from /config-server/config 
 WORKDIR /config-server
