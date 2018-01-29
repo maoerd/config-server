@@ -38,10 +38,16 @@
 			<artifactId>spring-cloud-config-monitor</artifactId>
 		</dependency>
 
-		<!-- Publish remote repo change event to client -->
+		<!-- Publish remote repo change event to client by rabbit -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-stream-kafka</artifactId>
+			<artifactId>spring-cloud-stream-binder-rabbit</artifactId>
+		</dependency>
+		
+		<!-- Publish remote repo change event to client by kafka -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-stream-binder-kafka</artifactId>
 		</dependency>
 
 		<!-- Register itself into Eureka Server as a service -->
